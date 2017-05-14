@@ -14,9 +14,9 @@
   }
 
   h6, code, pre {
-    border: none;
-    background: none;
-    color: inherit;
+    border: none !important;
+    background-color: transparent !important;
+    color: inherit !important;
     padding: 0;
     margin: 0;
     text-transform: none;
