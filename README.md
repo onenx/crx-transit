@@ -23,6 +23,7 @@ http://gdgxian.org/crx-transit/
 - 更新历史 http://git.io/pz7B
 - 项目主页 http://git.io/pz7K
 - 问题和反馈 http://git.io/pz7M
+- 项目贡献者 https://git.io/v5LUv
 
 # 开发
 

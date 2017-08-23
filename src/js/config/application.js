@@ -15,17 +15,13 @@ app.setup({
 app.showUpdateNotes = function() {
   chrome.notifications.create("update_notes", {
       type: "list",
-      title: "TransIt V1.6.1 更新记录",
+      title: "TransIt V1.6.2 更新记录",
       message: "",
       iconUrl: "img/icon48.png",
       items: [
         {
           title: '',
-          message: '解决了有道词典调用限制的问题'
-        },
-        {
-          title: '',
-          message: '解决翻译中的浮层无法关闭的问题'
+          message: '修正页面划词结果的样式冲突'
         }
       ]
   }, function () {});
