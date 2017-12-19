@@ -8,62 +8,39 @@
 var sugar = require('sugar');
 var $ = require('jquery');
 var utils = require('../lib/utils');
+var _ = require('underscore');
 
-// TODO: Auth detect word
-var WORD_URL = 'http://dict.baidu.com/s?wd=';
 var PHRASE_URL = 'http://fanyi.baidu.com/v2transapi';
 
-var SEL_WORD = '.en-simple-means';
-var SEL_WORD_MEANS = '.en-simple-means .en-content > div > p';
-var SEL_WORD_PHONETIC = '.pronounce [lang="EN-US"]:last';
-
-function formatWord(result) {
-  var $result = $(result);
-
-  if (!$result.find(SEL_WORD).length) return null;
-
-  var response = {};
-  
-  var $phonetic = $result.find(SEL_WORD_PHONETIC);
-  if ($phonetic.length) {
-    response.phonetic = $phonetic.text();
-  }
-  
-  var $means = $result.find(SEL_WORD_MEANS);
-  response.translation = $means.map(function() {
-    return $(this).text();
-  }).toArray().join('<br />');
-
-  return response;
-}
-
-function formatPhrase(result) {
+function formatResult(result) {
   if (!result) return null;
 
   var response = {};
-  var trans_result = result.trans_result.data[0];
 
-  if (trans_result.src == trans_result.dst) return null;
+  if (!_.isEmpty(result.dict_result)) {
+    try {
+      var symbols = result.dict_result.simple_means.symbols[0];
 
-  response.translation = trans_result.dst;
+      if (symbols.ph_am) {
+        response.phonetic = `[${symbols.ph_am}]`;
+      }
+
+      response.translation = symbols.parts.map(function (part) {
+        return `${part.part} ${part.means.join('; ')}`;
+      }).join('<br/>');
+    } catch (e) {
+      return null;
+    }
+  } else {
+    var trans_result = result.trans_result.data[0];
+    if (trans_result.src == trans_result.dst) return null;
+    response.translation = trans_result.dst;
+  }
 
   return response;
 }
 
-function requestWord(text, callback) {
-  var request = $.get(WORD_URL + encodeURIComponent(text));
-
-  request.done(function(html) {
-    callback(formatWord(utils.sanitizeHTML(html)));
-  });
-
-  request.fail(function() {
-    // TODO: Raise Error instead
-    callback(null);
-  });
-}
-
-function requestPhrase(text, callback) {
+function requestText(text, callback) {
   var payload = {
     from: 'en',
     to: 'zh',
@@ -74,7 +51,7 @@ function requestPhrase(text, callback) {
 
   var request = $.post(PHRASE_URL, payload);
   request.done(function(result) {
-    callback(formatPhrase(result));
+    callback(formatResult(result));
   });
 
   request.fail(function() {
@@ -88,10 +65,8 @@ var BaiduTranslator = { name: 'baidu' };
 BaiduTranslator.translate = function(text, callback) {
   if (/^\s*$/.test(text)) {
     callback(null);
-  } else if (/^[a-zA-Z]+$/.test(text)) {
-    requestWord(text, callback);
   } else {
-    requestPhrase(text, callback);
+    requestText(text, callback);
   }
 };
 
