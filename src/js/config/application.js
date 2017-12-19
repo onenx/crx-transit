@@ -13,17 +13,17 @@ app.setup({
 });
 
 app.showUpdateNotes = function() {
-  chrome.notifications.create("update_notes", {
-      type: "list",
-      title: "TransIt V1.6.2 更新记录",
-      message: "",
-      iconUrl: "img/icon48.png",
-      items: [
-        {
-          title: '',
-          message: '修正页面划词结果的样式冲突'
-        }
-      ]
+  chrome.notifications.create({
+    type: 'list',
+    title: 'TransIt V1.6.3 更新记录',
+    message: '',
+    iconUrl: 'img/icon48.png',
+    items: [
+      {
+        title: '',
+        message: '修复百度和必应翻译失效的问题'
+      }
+    ]
   }, function () {});
 };
 
