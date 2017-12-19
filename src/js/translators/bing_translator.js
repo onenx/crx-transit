@@ -5,8 +5,8 @@ import sugar from 'sugar';
 import $ from 'jquery';
 import { sanitizeHTML } from '../lib/utils';
 
-const DICT_URL = 'http://cn.bing.com/dict/search';
-const TRANSLATE_URL = 'http://cn.bing.com/translator/api/Translate/TranslateArray?from=-&to=zh-CHS';
+const DICT_URL = 'https://cn.bing.com/dict/search';
+const TRANSLATE_URL = 'https://cn.bing.com/translator/api/Translate/TranslateArray?from=-&to=zh-CHS';
 const REFERER = 'http://cn.bing.com/dict/?mkt=zh-cn&setlang=zh';
 
 export default class BingTranslator {
@@ -44,7 +44,7 @@ export default class BingTranslator {
         $means.map(this._parseMean).toArray().join('<br/>');
 
       return response;
-    } else if ($result.find('.p1-11')) {
+    } else if ($result.find('.p1-11').length) {
       return { translation: $result.find('.p1-11').text() };
     } else {
       return null;

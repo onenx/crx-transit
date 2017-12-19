@@ -6,7 +6,7 @@ import sugar from 'sugar';
 import $ from 'jquery';
 import { sanitizeHTML } from '../lib/utils';
 
-export default class BingTranslator {
+export default class YoudaoTranslator {
   constructor() {
     this.name = 'youdao';
   }
