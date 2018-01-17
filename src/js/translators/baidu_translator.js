@@ -8,7 +8,7 @@
 var sugar = require('sugar');
 var $ = require('jquery');
 var utils = require('../lib/utils');
-var _ = require('underscore');
+var _ = require('lodash');
 
 var PHRASE_URL = 'http://fanyi.baidu.com/v2transapi';
 

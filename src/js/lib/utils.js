@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 export function renderTranslation(query, result) {
   let phonetic = '';
   let translation = '未找到释义';
@@ -17,33 +19,41 @@ export function renderTranslation(query, result) {
     `</div>`;
 }
 
-function getClientHeight() {
-  const bodyHeight = document.body.clientHeight;
-  const docHeight  = document.documentElement.clientHeight;
+function getComputedPosition(position) {
+  const $elem = $('<div class="transit-spirit"></div>').appendTo('body');
+  $elem.css(position);
+  
+  const computedStyle = window.getComputedStyle($elem.get(0));
+  const computedPosition = {
+    left: computedStyle.left,
+    top: computedStyle.top,
+    right: computedStyle.right,
+    bottom: computedStyle.bottom,
+  };
 
-  let clientHeight = bodyHeight < docHeight ?  bodyHeight: docHeight;
-  if (clientHeight === 0) {
-    clientHeight = docHeight;
-  }
-
-  return clientHeight;
+  $elem.remove();
+  return computedPosition;
 }
 
 function getPosition(evt, selection) {
-  let rect = selection.getRangeAt(0).getBoundingClientRect();
+  const rect = selection.getRangeAt(0).getBoundingClientRect();
+  const scroll = { x: window.pageXOffset, y: window.pageYOffset };
 
-  // Use mouse position if selection range position invalid (in text field)
+  // 如果选中的文本是在文本框中，则使用鼠标位置
+  let position = null;
   if (rect.left === 0 && rect.top === 0) {
-    rect = { left: evt.clientX, top: evt.clientY, height: 15 };
+    position = { left: evt.clientX, top: evt.clientY, height: 24 };
+  } else {
+    position = { left: rect.left + scroll.x, top: rect.top + scroll.y, height: rect.height };
   }
 
-  const left = rect.left + document.body.scrollLeft;
-  const top  = rect.top + document.body.scrollTop;
+  // 生成一个临时元素以获取精准定位
+  var computedPosition = getComputedPosition(position);
 
-  if (rect.top >= 150) {
-    return { left: left, bottom: getClientHeight() - top };
+  if (position.top >= 150) {
+    return { left: position.left, bottom: parseFloat(computedPosition.bottom) + rect.height + 10 };
   } else {
-    return { left: left, top: top + rect.height + 5 };
+    return { left: position.left, top: parseFloat(computedPosition.top) + rect.height + 10 };
   }
 }
 
