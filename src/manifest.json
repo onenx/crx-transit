@@ -35,7 +35,9 @@
     "tabs",
     "storage",
     "notifications",
-    "https://fanyi-api.baidu.com/api/trans/vip/translate",
+    "webRequest",
+    "webRequestBlocking",
+    "http://fanyi.baidu.com/basetrans",
     "http://cn.bing.com/dict/search",
     "http://cn.bing.com/translator/api/Translate/TranslateArray"
   ],
