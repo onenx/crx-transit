@@ -11,9 +11,7 @@
   },
 
   "background": {
-    "scripts": [
-      "js/event.js"
-    ],
+    "scripts": ["js/event.js"],
     "persistent": true
   },
 
@@ -28,9 +26,7 @@
     {
       "matches": ["<all_urls>"],
       "css": ["css/contentstyle.css"],
-      "js": [
-        "js/contentscript.js"
-      ],
+      "js": ["js/contentscript.js"],
       "all_frames": true
     }
   ],
@@ -39,9 +35,7 @@
     "tabs",
     "storage",
     "notifications",
-    "http://fanyi.youdao.com/openapi.do",
-    "http://dict.baidu.com/s",
-    "http://fanyi.baidu.com/v2transapi",
+    "https://fanyi-api.baidu.com/api/trans/vip/translate",
     "http://cn.bing.com/dict/search",
     "http://cn.bing.com/translator/api/Translate/TranslateArray"
   ],

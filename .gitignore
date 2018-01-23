@@ -10,3 +10,5 @@
 *.patch
 *.diff
 *~
+
+/src/js/config/settings.js

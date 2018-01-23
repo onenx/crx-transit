@@ -1,16 +1,16 @@
 /**
- * 百度翻译的 API 支持
+ * 使用百度翻译 API 提供翻译功能
  *
- * http://dwz.cn/bau5M
- * 
- * jshint strict:true
+ * http://fanyi-api.baidu.com/api/trans/product/apidoc
  */
-var sugar = require('sugar');
-var $ = require('jquery');
-var utils = require('../lib/utils');
-var _ = require('lodash');
 
-var PHRASE_URL = 'http://fanyi.baidu.com/v2transapi';
+import $ from 'jquery';
+import utils from '../lib/utils';
+import _ from 'lodash';
+import settings from '../config/settings';
+import md5 from 'md5';
+
+const API_URL = 'https://fanyi-api.baidu.com/api/trans/vip/translate';
 
 function formatResult(result) {
   if (!result) return null;
@@ -32,6 +32,7 @@ function formatResult(result) {
       return null;
     }
   } else {
+    console.log(result);
     var trans_result = result.trans_result.data[0];
     if (trans_result.src == trans_result.dst) return null;
     response.translation = trans_result.dst;
@@ -40,34 +41,37 @@ function formatResult(result) {
   return response;
 }
 
-function requestText(text, callback) {
-  var payload = {
-    from: 'en',
-    to: 'zh',
-    query: text,
-    transtype: 'translang',
-    simple_means_flag: 3
-  };
-
-  var request = $.post(PHRASE_URL, payload);
-  request.done(function(result) {
-    callback(formatResult(result));
-  });
-
-  request.fail(function() {
-    // TODO: Raise Error instead
-    callback(null);
-  });
+function generateSign (text, salt) {
+  const source = `${settings.BAIDU_APP_ID}${text}${salt}${settings.BAIDU_APP_SECRET}`;
+  return md5(source);
 }
 
-var BaiduTranslator = { name: 'baidu' };
+function requestText(text, callback) {
+  const salt = new Date().getTime();
 
-BaiduTranslator.translate = function(text, callback) {
-  if (/^\s*$/.test(text)) {
-    callback(null);
-  } else {
-    requestText(text, callback);
+  let formData = new FormData();
+  formData.append('from', 'en');
+  formData.append('to', 'zh');
+  formData.append('q', encodeURIComponent(text));
+  formData.append('appid', settings.BAIDU_APP_ID);
+  formData.append('salt', salt);
+  formData.append('sign', generateSign(text, salt));
+
+  fetch(API_URL, {
+    method: 'POST',
+    body: formData,
+    mode: 'cors',
+  }).then(response => console.log(response))
+    .catch(() => callback(null));
+}
+
+export default {
+  name: 'baidu',
+  translate (text, callback) {
+    if (/^\s*$/.test(text)) {
+      callback(null);
+    } else {
+      requestText(text, callback);
+    }
   }
 };
-
-module.exports = BaiduTranslator;

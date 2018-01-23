@@ -1,0 +1,4 @@
+export default {
+  BAIDU_APP_ID: 'foo',
+  BAIDU_APP_SECRET: 'bar'
+};
