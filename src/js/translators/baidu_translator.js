@@ -10,7 +10,7 @@ import _ from 'lodash';
 import settings from '../config/settings';
 import md5 from 'md5';
 
-const API_URL = 'https://fanyi-api.baidu.com/api/trans/vip/translate';
+const API_URL = 'http://fanyi.baidu.com/basetrans';
 
 function formatResult(result) {
   if (!result) return null;
@@ -47,19 +47,9 @@ function generateSign (text, salt) {
 }
 
 function requestText(text, callback) {
-  const salt = new Date().getTime();
-
-  let formData = new FormData();
-  formData.append('from', 'en');
-  formData.append('to', 'zh');
-  formData.append('q', encodeURIComponent(text));
-  formData.append('appid', settings.BAIDU_APP_ID);
-  formData.append('salt', salt);
-  formData.append('sign', generateSign(text, salt));
-
   fetch(API_URL, {
     method: 'POST',
-    body: formData,
+    body: $.param({ from: 'en', to: 'en', 'query': text }),
     mode: 'cors',
   }).then(response => console.log(response))
     .catch(() => callback(null));
