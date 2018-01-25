@@ -15,8 +15,8 @@ app.setup({
 app.showUpdateNotes = function() {
   chrome.notifications.create({
     type: 'basic',
-    title: 'TransIt V1.6.4 更新记录',
-    message: '- 修复百度翻译失效的问题\n- 修复页面划词翻译的位置问题',
+    title: 'TransIt V1.6.5 更新记录',
+    message: '- 修复脚本错误',
     iconUrl: 'img/icon48.png'
   }, function () {});
 };
