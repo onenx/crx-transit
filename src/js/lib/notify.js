@@ -23,7 +23,7 @@ var tpls = {
 
 function getNotifyList() {
   var $notifyList = $('.transit-notify-list');
-  if ($notifyList.size() === 0) {
+  if ($notifyList.length <= 0) {
     $notifyList = $(tpls.list).appendTo('body');
   }
 
