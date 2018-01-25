@@ -63,6 +63,10 @@ module.exports = function(grunt) {
         }]
       }
     },
+    clean: {
+      build: ['build'],
+      release: ['dist']
+    },
     watch: {
       scripts: {
         files: 'src/js/**/*.js',
@@ -102,8 +106,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-compress');
+  grunt.loadNpmTasks('grunt-contrib-clean');
 
   grunt.registerTask('build', ['jshint', 'browserify', 'sass', 'copy']);
-  grunt.registerTask('dist', ['build', 'uglify', 'compress'])
-  grunt.registerTask('default', ['build', 'watch'])
+  grunt.registerTask('dist', ['clean', 'build', 'uglify', 'compress'])
+  grunt.registerTask('default', ['clean', 'build', 'watch'])
 };
