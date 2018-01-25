@@ -1,6 +1,6 @@
 # TransIt
 
-> TransIt 已更名为 SmoothTranslator，此旧版本不再维护，新版本还在开发中，请关注 https://github.com/greatghoul/smooth-translator
+> TransIt 已更名为 [SmoothTranslator](https://github.com/greatghoul/smooth-translator)，此项目不再开发新功能，只修复问题。
 
 TransIt - 让划词翻译更简单
 
