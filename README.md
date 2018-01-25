@@ -63,3 +63,11 @@ grunt default
 ```
 
 将会对项目进行编译, 然后检测文件的改变, 实时编译项目文件.
+
+## 贡献者列表
+
+- [@greatghoul](https://github.com/greatghoul)
+- [@wszgxa](https://github.com/wszgxa)
+- [@ververcpp](https://github.com/ververcpp)
+- [@david30xie](https://github.com/david30xie)
+- [@phith0n](https://github.com/phith0n)
