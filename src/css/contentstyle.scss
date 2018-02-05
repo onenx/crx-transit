@@ -1,11 +1,14 @@
 @import "includes/link-colors";
 
-[class*='transit-'], [class*='transit-'] * {
+[class*='transit-'],
+[class*='transit-'][id],
+[class*='transit-'] *,
+[class*='transit-'][id] * {
   margin: 0;
   padding: 0;
   border: 0;
   font-size: 100%;
-  font: inherit;
+  font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", "Microsoft Yahei", sans-serif;
   vertical-align: baseline;
   width: auto;
   height: auto;

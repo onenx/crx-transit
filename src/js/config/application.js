@@ -15,8 +15,8 @@ app.setup({
 app.showUpdateNotes = function() {
   chrome.notifications.create({
     type: 'basic',
-    title: 'TransIt V1.6.5 更新记录',
-    message: '- 解决升级依赖导致的脚本错误',
+    title: 'TransIt V1.6.6 更新记录',
+    message: '- 解决部分页面划词翻译结果样式失控的问题',
     iconUrl: 'img/icon48.png'
   }, function () {});
 };
